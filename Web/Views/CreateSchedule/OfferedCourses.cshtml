@@ -1,0 +1,35 @@
+﻿@model Web.Models.OfferedCoursesViewModel
+@{
+    ViewBag.Title = "Kursy";
+}
+
+@if (Request.IsAuthenticated)
+{
+    <h2>Oferowane kursy: </h2>
+    <table class="table table-striped text-center table-bordered ">
+        <tr>
+            <td>Numer porządkowy</td>
+            <td>Nazwa kursy</td>
+            <td>Dzień zajęć</td>
+            <td>Godzina rozpoczęcia</td>
+            <td>Godzina zakończenia</td>
+            <td>Liczba dostępnych miejsc</td>
+        </tr>
+        @foreach (var c in Model.Courses)
+        {
+            <tr>
+                <td>@c.Id</td>
+                <td>@c.Name</td>
+                <td>@c.Day</td>
+                <td>@c.StartHour</td>
+                <td>@c.EndHour</td>
+                <td>@c.Limit</td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <br/>
+    <h2>Nie jesteś zalogowany. Zaloguj się, aby móc oglądać tę stronę. </h2>
+}

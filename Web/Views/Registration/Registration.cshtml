@@ -1,0 +1,24 @@
+﻿@model Web.Models.RegistrationViewModel
+@{
+    ViewBag.Title = "Zarządzaj Rejestracją";
+}
+
+@if (Request.IsAuthenticated)
+{
+    <h2>Aktualny status Rejestracji: @Model.Status </h2>
+
+<br />
+
+<p><a href="/Registration/ChangeStatus?status=Otwarta" class="btn btn-primary btn-lg">Otwórz możliwość rejestrowania się &raquo;</a></p>
+    <br/>
+    <p><a href="/Registration/ChangeStatus?status=Zakończona" class="btn btn-primary btn-lg">Zakończ aktualnie otwartą rejestrację &raquo;</a></p>
+    <br/>
+    <p><a href="/Registration/RunScheduler" class="btn btn-primary btn-lg">Przydziel studentów do grup &raquo;</a></p>
+    <br/>
+    @Model.ErrorText
+}
+else
+{
+    <br/>
+    <h2>Nie jesteś zalogowany. Zaloguj się, aby móc oglądać tę stronę. </h2>
+}

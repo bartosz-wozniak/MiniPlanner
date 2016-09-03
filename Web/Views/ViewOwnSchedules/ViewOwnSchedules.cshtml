@@ -1,0 +1,82 @@
+﻿@model Web.Models.ViewOwnSchedulesViewModel
+@{
+    ViewBag.Title = "Zarządzaj swoimi planami";
+}
+
+@if (Request.IsAuthenticated)
+{
+    <h2>Twoje plany: </h2>
+    <table class="table table-striped text-center table-bordered ">
+        <tr>
+            <td>Numer porządkowy planu</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        @if (Model.Schedules != null)
+        {
+            foreach (var c in Model.Schedules)
+            {
+                <tr>
+                    <td>@c</td>
+                    <td>
+                        @Html.ActionLink("Przeglądaj plan", "Select", "ViewOwnSchedules", new {id = @c}, null)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Usuń plan", "Delete", "ViewOwnSchedules", new {id = @c}, null)
+                    </td>
+                    <td>
+                        @if (c != 1)
+                        {
+                            @Html.ActionLink("W górę", "MoveUp", "ViewOwnSchedules", new {id = @c}, null)
+                        }
+                    </td>
+                    <td>
+                        @if (c != Model.Schedules.Count)
+                        {
+                            @Html.ActionLink("W dół", "MoveDown", "ViewOwnSchedules", new {id = @c}, null)
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+    <br/>
+    <p>@Model.ErrorText</p>
+    <br/>
+    if (Model.ScheduleDetails != null && Model.ScheduleDetails.Any())
+    {
+    <h2>Sczegóły dotyczące wybranego planu: </h2>
+        <table class="table table-striped text-center table-bordered ">
+            <tr>
+                <td>Numer porządkowy planu</td>
+                <td>Numer porządkowy kursu</td>
+                <td>Nazwa kursy</td>
+                <td>Dzień zajęć</td>
+                <td>Godzina rozpoczęcia</td>
+                <td>Godzina zakończenia</td>
+                <td>Liczba dostępnych miejsc</td>
+            </tr>
+
+            @foreach (var c in Model.ScheduleDetails)
+            {
+                <tr>
+                    <td>@c.ScheduleId</td>
+                    <td>@c.Course.Id</td>
+                    <td>@c.Course.Name</td>
+                    <td>@c.Course.Day</td>
+                    <td>@c.Course.StartHour</td>
+                    <td>@c.Course.EndHour</td>
+                    <td>@c.Course.Limit</td>
+                </tr>
+            }
+
+        </table>
+    }
+}
+else
+{
+    <br />
+    <h2>Nie jesteś zalogowany. Zaloguj się, aby móc oglądać tę stronę. </h2>
+}

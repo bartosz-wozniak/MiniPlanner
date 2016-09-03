@@ -1,0 +1,15 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+        <ul class="nav navbar-nav navbar-right">
+            <li>@Html.ActionLink("Witaj " + User.Identity.GetUserName() + "!", "Register", "Account", new { login = User.Identity.GetUserName() }, null)</li>
+            <li>@Html.ActionLink("Wyloguj się", "LogOff", "Account")</li>
+        </ul>
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Zarejestruj się", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Zaloguj się", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}

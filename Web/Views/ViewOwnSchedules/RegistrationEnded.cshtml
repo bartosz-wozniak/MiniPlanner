@@ -1,0 +1,42 @@
+﻿@model Web.Models.ViewOwnSchedulesViewModel
+@{
+    ViewBag.Title = "Wylosowałeś następujący plan";
+}
+
+@if (Request.IsAuthenticated)
+{
+    if (Model.ScheduleDetails != null && Model.ScheduleDetails.Any())
+    {
+        <h2>Sczegóły dotyczące wybranego planu: </h2>
+        <table class="table table-striped text-center table-bordered ">
+            <tr>
+                <td>Numer porządkowy planu</td>
+                <td>Numer porządkowy kursu</td>
+                <td>Nazwa kursy</td>
+                <td>Dzień zajęć</td>
+                <td>Godzina rozpoczęcia</td>
+                <td>Godzina zakończenia</td>
+                <td>Liczba dostępnych miejsc</td>
+            </tr>
+
+            @foreach (var c in Model.ScheduleDetails)
+            {
+                <tr>
+                    <td>@c.ScheduleId</td>
+                    <td>@c.Course.Id</td>
+                    <td>@c.Course.Name</td>
+                    <td>@c.Course.Day</td>
+                    <td>@c.Course.StartHour</td>
+                    <td>@c.Course.EndHour</td>
+                    <td>@c.Course.Limit</td>
+                </tr>
+            }
+
+        </table>
+    }
+}
+else
+{
+    <br />
+    <h2>Nie jesteś zalogowany. Zaloguj się, aby móc oglądać tę stronę. </h2>
+}

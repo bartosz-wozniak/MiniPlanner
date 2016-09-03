@@ -1,0 +1,72 @@
+﻿@model Web.Models.CreateScheduleViewModel
+@{
+    ViewBag.Title = "Skomponuj swój plan";
+}
+
+@if (Request.IsAuthenticated)
+{
+    <h2>Wybrane kursy: </h2>
+    <table class="table table-striped text-center table-bordered ">
+        <tr>
+            <td>Numer porządkowy</td>
+            <td>Nazwa kursy</td>
+            <td>Dzień zajęć</td>
+            <td>Godzina rozpoczęcia</td>
+            <td>Godzina zakończenia</td>
+            <td>Liczba dostępnych miejsc</td>
+            <td></td>
+        </tr>
+        @if (Model.CoursesChosen != null)
+        {
+            foreach (var c in Model.CoursesChosen)
+            {
+                <tr>
+                    <td>@c.Id</td>
+                    <td>@c.Name</td>
+                    <td>@c.Day</td>
+                    <td>@c.StartHour</td>
+                    <td>@c.EndHour</td>
+                    <td>@c.Limit</td>
+                    <td>
+                        @Html.ActionLink("Usuń", "Delete", "CreateSchedule", new {id = @c.Id}, null)
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+    <br/>
+    <p><a href="/CreateSchedule/SaveSchedule" class="btn btn-primary btn-lg navbar-right">Zapisz plan &raquo;</a></p>
+    <p>@Model.ErrorText</p>
+    <br />
+    <h2>Oferowane kursy: </h2>
+    <table class="table table-striped text-center table-bordered ">
+        <tr>
+            <td>Numer porządkowy</td>
+            <td>Nazwa kursy</td>
+            <td>Dzień zajęć</td>
+            <td>Godzina rozpoczęcia</td>
+            <td>Godzina zakończenia</td>
+            <td>Liczba dostępnych miejsc</td>
+            <td></td>
+        </tr>
+        @foreach (var c in Model.CoursesToChoose)
+        {
+            <tr>
+                <td>@c.Id</td>
+                <td>@c.Name</td>
+                <td>@c.Day</td>
+                <td>@c.StartHour</td>
+                <td>@c.EndHour</td>
+                <td>@c.Limit</td>
+                <td>
+                    @Html.ActionLink("Dodaj", "Add", "CreateSchedule", new { id = @c.Id }, null)
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <br />
+    <h2>Nie jesteś zalogowany. Zaloguj się, aby móc oglądać tę stronę. </h2>
+}
